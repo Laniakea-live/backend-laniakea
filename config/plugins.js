@@ -24,12 +24,12 @@ module.exports = ({ env }) => ({
               users.push({
                 id: socket.id,
                 username: socket.handshake.auth.username,
-                title_color: randomColor()
+                color: randomColor()
               });
 
               socket.join(room);
               socket.rooms[socket.id] = room
-              socket.to(socket.rooms[socket.id]).emit('newMember', users)
+              strapi.$io.to(socket.rooms[socket.id]).emit('newMember', users)
               isDev ? strapi.log.info(`[Info] User ${socket.handshake.auth.username} join room ${room}. The room now has ${users.length} members`) : null
             })
 
@@ -42,7 +42,7 @@ module.exports = ({ env }) => ({
               socket.to(socket.rooms[socket.id]).emit('join', message)
               users.splice(users.indexOf(socket.handshake.auth.username), 1)
               socket.to(socket.rooms[socket.id]).emit('newMember', users)
-              isDev ? strapi.log.info(`[bye] new bye: ${message}`) : null
+              isDev ? strapi.log.info(`[bye] new bye: ${message} and the room has now ${JSON.stringify(users)}`) : null
             })
 
             socket.on('chat', message => {
