@@ -6,7 +6,7 @@ module.exports = ({ env }) => ({
     "enabled": true,
     "config": {
       "IOServerOptions" :{
-        "cors": { "origin": "http://localhost:8000", "methods": ["GET"] },
+        "cors": { "origin": ["https://app.laniakea.live", "http://localhost:8000"], "methods": ["GET"] },
       },
       "contentTypes": {
         "message": "*",
